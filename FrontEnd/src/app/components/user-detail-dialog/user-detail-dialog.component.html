@@ -1,0 +1,27 @@
+<h2 mat-dialog-title class="dialog-title">Edit Profile</h2>
+
+<mat-dialog-content [formGroup]="userForm" class="dialog-content">
+
+  <div class="user-photo-section">
+    <img [src]="'http://localhost:8080' + (this.apiService.connectedUser$ | async)?.avatar" (error)="this.apiService.onImageFail($event)" alt="User Photo" class="user-photo" />
+    <label for="photoInput" class="upload-button">
+      Change Photo
+      <input id="photoInput" type="file" (change)="onFileSelected($event)" hidden />
+      
+    </label>
+  </div>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="name">
+    <mat-icon matSuffix (click)="onSaveName(userForm.value.name!)">edit</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email">
+    <mat-icon matSuffix (click)="onSaveEmail(userForm.value.email!)">edit</mat-icon>
+  </mat-form-field>
+  
+</mat-dialog-content>
+

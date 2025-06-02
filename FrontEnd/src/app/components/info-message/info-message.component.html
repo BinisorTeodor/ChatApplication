@@ -1,0 +1,12 @@
+<mat-card class="message-card" [ngClass]="type">
+  <div class="card-content">
+    <mat-icon class="icon">{{ icon }}</mat-icon>
+    <div class="text-content">
+      <h3>{{ title }}</h3>
+      <p>{{ text }}</p>
+    </div>
+    <button *ngIf="dismissible" mat-icon-button (click)="close()" aria-label="Close message">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</mat-card>

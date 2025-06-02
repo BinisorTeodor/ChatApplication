@@ -1,0 +1,53 @@
+.message-card {
+  display: flex;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-left: 6px solid transparent;
+
+  &.error {
+    background-color: #ffebee;
+    color: #b71c1c;
+    border-left-color: #b71c1c;
+  }
+
+  &.success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border-left-color: #2e7d32;
+  }
+
+  &.info {
+    background-color: #e3f2fd;
+    color: #1565c0;
+    border-left-color: #1565c0;
+  }
+
+  .card-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    .icon {
+      font-size: 32px;
+      margin-right: 1rem;
+    }
+
+    .text-content {
+      flex: 1;
+
+      h3 {
+        margin: 0 0 4px 0;
+        font-size: 18px;
+      }
+
+      p {
+        margin: 0;
+        font-size: 14px;
+      }
+    }
+
+    button {
+      margin-left: auto;
+    }
+  }
+}

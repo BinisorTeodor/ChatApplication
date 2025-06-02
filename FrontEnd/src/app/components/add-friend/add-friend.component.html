@@ -1,0 +1,68 @@
+<div class="add-friend-container">
+  <!-- Left side: Search + Sent Requests -->
+  <div class="left-panel">
+    <mat-card class="add-friend-card">
+      <form [formGroup]="addFriendForm" (ngSubmit)="addFriend()" class="add-friend-form">
+        <mat-form-field appearance="outline" class="search-bar">
+          <mat-label>Search by nickname</mat-label>
+          <input matInput formControlName="nickname" />
+          <mat-error *ngIf="addFriendForm.get('nickname')?.invalid && addFriendForm.get('nickname')?.touched">
+            Nickname is required and must be at least 3 characters.
+          </mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" [disabled]="addFriendForm.invalid">
+          Add
+        </button>
+      </form>
+    </mat-card>
+
+    <mat-card class="friend-list-card">
+      <mat-card-title>Sent Requests</mat-card-title>
+      <mat-list>
+        <mat-list-item *ngFor="let req of apiService.sentRequests$ | async; let i = index">
+          <ng-container *ngIf="req != null">
+            <div class="friend-row">
+              <span class="friend-name">{{ req.receiver.fullName }}</span>
+              <button class="icon-button-decline" mat-icon-button (click)="declineSentRequest(req,i)"
+                matTooltip="Cancel Request">
+                <mat-icon color="warn">close</mat-icon>
+              </button>
+              <mat-divider inset class="divider"></mat-divider>
+            </div>
+          </ng-container>
+        </mat-list-item>
+      </mat-list>
+    </mat-card>
+  </div>
+
+  <mat-divider vertical="true"></mat-divider>
+  <!-- Right side: Pending Requests -->
+  <div class="right-panel">
+    <mat-card class="friend-list-card">
+      <mat-card-title>Pending Friend Requests</mat-card-title>
+      <mat-list>
+        <mat-list-item *ngFor="let req of apiService.receivedRequests$ |async; let i = index;">
+
+          <ng-container *ngIf="req != null">
+            <div class="friend-row">
+              <span class="friend-name">{{ req.sender.fullName }} <mat-chip color="accent"
+                  selected>Pending</mat-chip></span>
+              <span class="actions">
+                <button class="icon-button-accept" mat-icon-button (click)="acceptRequest(req,i)" matTooltip="Accept">
+                  <mat-icon color="primary">check</mat-icon>
+                </button>
+                <button class="icon-button-decline" mat-icon-button (click)="declinePendingRequest(req, i)"
+                  matTooltip="Decline">
+                  <mat-icon color="warn">close</mat-icon>
+                </button>
+              </span>
+              <mat-divider inset class="divider"></mat-divider>
+            </div>
+
+          </ng-container>
+
+        </mat-list-item>
+      </mat-list>
+    </mat-card>
+  </div>
+</div>

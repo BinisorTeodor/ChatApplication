@@ -1,0 +1,33 @@
+<div class="card--container">
+    <mat-card>
+        <div class="card-title">
+            <mat-card-title>Create New Group</mat-card-title>
+        </div>
+        <mat-card-content>
+
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Group Name</mat-label>
+                <input matInput [(ngModel)]="groupName" required="" />
+            </mat-form-field>
+
+            <div class="friends-list-wrapper">
+                <mat-selection-list [(ngModel)]="selectedFriends" class="list-of-friends">
+                    <mat-list-option *ngFor="let friend of friends | async" [value]="friend">
+                        <div class="friend-item">
+                            <img class="friend-avatar" [src]="'http://localhost:8080' + friend.avatar" (error)="this.apiSerivce.onImageFail($event)" />
+                            <span class="friend-name">{{ friend.fullName }}</span>
+                            <mat-divider class="divider" inset></mat-divider>
+                        </div>
+                    </mat-list-option>
+                </mat-selection-list>
+            </div>
+        </mat-card-content>
+
+        <div class="action-buttons">
+            <mat-card-actions>
+                <button mat-button (click)="onCancel()">Cancel</button>
+                <button mat-raised-button color="primary" (click)="onCreate()">Create</button>
+            </mat-card-actions>
+        </div>
+    </mat-card>
+</div>

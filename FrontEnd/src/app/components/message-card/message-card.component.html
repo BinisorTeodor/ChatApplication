@@ -1,0 +1,38 @@
+<!-- <mat-card class="message-card">
+  <mat-card-header>
+    <mat-card-title>{{ senderName }}</mat-card-title>
+    <mat-card-subtitle>{{ timestamp | date:'HH:mm' }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{ content }}</p>
+  </mat-card-content>
+</mat-card> -->
+
+<div class="message-bubble" [class.me]="myMessage" (mouseenter)="showMenu = true;" (mouseleave)="onMouseLeave()" >
+
+    <div class="menu-dots" *ngIf="showMenu || isMenuOpen">
+        <button mat-icon-button 
+        [matMenuTriggerFor]="menu"
+        (menuOpened)="isMenuOpen = true"
+        (menuClosed)="isMenuOpen = false; showMenu = false">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+    </div>
+
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="onDeleteButton()">
+            <mat-icon>delete</mat-icon>
+            <span >Delete</span>
+        </button>
+    </mat-menu>
+
+    <div class="message-header" *ngIf="senderName">
+        <span class="message-name">{{"~ " + senderName }}</span>
+    </div>
+
+    <div class="message-content">
+        {{ content }}
+
+    </div>
+    <span class="message-time">{{ timestamp | date:'HH:mm' }}</span>
+</div>

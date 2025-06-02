@@ -1,0 +1,83 @@
+.sidenav-container {
+  height: 100%;
+  
+}
+
+.sidenav {
+  width: 200px;
+  background-color: #f8f6e1;
+  border-radius: 0;
+  border-right:1px solid #ccc ;
+}
+
+.sidenav-toolbar {
+  background-color: #f8f6e1;
+}
+
+
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+
+.toolbar {
+  color: white;
+  background-color: rgba($color:   #f9d48a, $alpha: 1.0);
+}
+
+.sidenav-items {
+  height: 86.2vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidenav-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; // pushes bottom section down
+  padding: 1rem 0;
+}
+
+.bottom-nav {
+  padding-top: 2rem;
+  text-align: center;
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .username {
+    font-weight: bold;
+  }
+}
+
+.avatar-header {
+  width: 40px;
+  height: 40px;
+  background-image: url('./chat.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  margin-left: 1rem;
+}
+
+
+
+
+

@@ -1,0 +1,113 @@
+<div class="chat-container">
+  <!-- Left Sidebar: Friends List -->
+  <div class="friends-list">
+    <mat-form-field appearance="outline" class="search-bar">
+
+      <mat-label>Search group...</mat-label>
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput [(ngModel)]="searchGroup" placeholder="Type to search..." (ngModelChange)="filterGroup($event)" />
+      <button mat-icon-button matSuffix *ngIf="searchGroup" (click)="onRemoveSearch()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+
+    <mat-nav-list>
+      <mat-list-item *ngFor="let group of filteredGroups$ | async">
+        <div class="friend-item" (click)="onGroupClick(group)">
+          <img class="friend-avatar" [src]="'http://localhost:8080' +group.avatar" (error)="this.apiService.onGroupImageFail($event)"/>
+          <span class="friend-name">{{ group.name }}</span>
+          <mat-divider class="divider" inset></mat-divider>
+        </div>
+      </mat-list-item>
+    </mat-nav-list>
+  </div>
+
+  <!-- Right Side: Chat Area -->
+
+
+
+  <div *ngIf="clickedGroup && (this.apiService.selectedGroup$ | async)?.name != null; else basicMessage" class="chat-area">
+
+
+    <!-- HEADER -->
+
+
+
+    <mat-toolbar color="primary" *ngIf="(this.apiService.selectedGroup$ | async)?.name != null">
+      <span><img class="friend-avatar" [src]="'http://localhost:8080' +(this.apiService.selectedGroup$ |async)?.avatar"
+          (error)="this.apiService.onGroupImageFail($event)" /></span>
+      <span (click)="onGroupDetails()">{{ (this.apiService.selectedGroup$ |async)?.name }}</span>
+      <span class="spacer"></span>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="onGroupDetails()">
+        <mat-icon>person</mat-icon>
+        <span>View Group</span>
+      </button>
+      <button mat-menu-item (click)="onGetOutOfGroup(clickedGroup.id)">
+        <mat-icon>delete</mat-icon>
+        <span>Get out of group</span>
+      </button>
+    </mat-menu>
+    <!-- HEADER -->
+
+
+    <!-- Messages -->
+    <div class="messages">
+      <div *ngFor="let msg of this.apiService.groupMessages$ | async">
+
+
+        <!-- Date separator -->
+        <div *ngIf="msg.content.startsWith('imadateseparator@')" class="date-message">
+          <span>{{ msg.content.slice(17) }}</span>
+        </div>
+
+        <!-- Normal chat message -->
+        <div *ngIf="!msg.content.startsWith('imadateseparator@')" class="message" [class.me]="msg.senderId == user.id">
+
+          <app-message-card [idOfMessage]="msg.id!" [group]="clickedGroup" [senderName]="msg.senderName || '' "
+            [content]="msg.content" [timestamp]="msg.timestamp " [myMessage]="msg.senderId == user.id">
+          </app-message-card>
+
+        </div>
+      </div>
+      <div #bottom></div>
+    </div>
+
+    <!-- Message Input -->
+    <div class="message-input">
+      <button mat-icon-button>
+        <mat-icon>emoji_emotions</mat-icon>
+      </button>
+
+      <input class="text" [(ngModel)]="newMessage" (keydown.enter)="onSendMessage(newMessage)"
+        placeholder=" Type a message..." />
+      <input type="file" #fileInput hidden (change)="sendPhoto($event)" />
+
+      <button mat-icon-button (click)="fileInput.click()">
+        <mat-icon>attach_file</mat-icon>
+      </button>
+      <button mat-icon-button color="primary" (click)="onSendMessage(newMessage)">
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #basicMessage>
+  <mat-card class="chat-placeholder-card">
+    <mat-card-header>
+      <mat-card-title>No Conversation Selected</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Select a friend from the list to start chatting.</p>
+      <img [src]="'assets/images/group-chat-placeholder.svg'" alt="Chat Placeholder" class="placeholder-image" />
+    </mat-card-content>
+  </mat-card>
+</ng-template>

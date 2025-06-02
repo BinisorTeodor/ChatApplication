@@ -1,0 +1,129 @@
+<div class="chat-container">
+  <!-- Left Sidebar: Friends List -->
+  <div class="friends-list">
+    <mat-form-field appearance="outline" class="search-bar">
+
+      <mat-label>Search friend...</mat-label>
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput [(ngModel)]="searchFriend" placeholder="Type to search..."
+        (ngModelChange)="filterFriend($event)" />
+      <button mat-icon-button matSuffix *ngIf="searchFriend" (click)="onRemoveSearch()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+
+    <mat-nav-list>
+
+      <mat-list-item *ngFor="let friend of filteredFriendsNotification$ | async" class="friend-component"
+        [class.selected]='friend.friend.id === selectedFriendId'>
+        <div class="friend-item" (click)="onFriendClick(friend)">
+          <span *ngIf="friend.friend.online" class="onlineDot"></span>
+          <img class="friend-avatar" [src]="'http://localhost:8080' + friend.friend.avatar" (error)="this.apiService.onImageFail($event)" />
+          <span class="friend-name" >{{ friend.friend.fullName}} </span>
+          <span *ngIf="!(selectedFriend === friend.friend) && friend.notification.has_new_messages"
+            class="notification">
+
+            {{friend.notification.has_new_messages}}
+
+          </span>
+
+
+          <mat-divider class="divider" inset></mat-divider>
+        </div>
+      </mat-list-item>
+    </mat-nav-list>
+  </div>
+
+  <!-- Right Side: Chat Area -->
+  <div *ngIf="clickedFriend; else basicMessage" class="chat-area">
+
+
+
+    <!-- HEADER -->
+
+    <mat-toolbar color="primary" *ngIf="selectedFriend">
+      <span><img class="friend-avatar" [src]="'http://localhost:8080' + (this.apiService.selectedFriend$ | async)?.avatar" (error)="this.apiService.onImageFail($event)" /></span>
+      <span (click)="onFriendProfile(selectedFriend)" >{{ (this.apiService.selectedFriend$ | async)?.fullName }} </span>
+      <span class="spacer"></span>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>person</mat-icon>
+        <span>View Profile</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>block</mat-icon>
+        <span>Block User</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>delete</mat-icon>
+        <span>Clear Chat</span>
+      </button>
+    </mat-menu>
+
+    <!-- HEADER -->
+
+    <!-- Messages -->
+
+    <div #chatContainer class="messages">
+      <div *ngFor="let msg of this.apiService.messages$ | async">
+
+        <!-- Date separator -->
+        <div *ngIf="msg.content.startsWith('imadateseparator@')" class="date-message">
+          <span>{{ msg.content.slice(17) }}</span>
+        </div>
+
+        <!-- Normal chat message -->
+        <div *ngIf="!msg.content.startsWith('imadateseparator@')" class="message"
+          [class.me]="msg.sender?.id === user.id">
+
+          <app-message-card (click)="onMessageClick(msg)" [sender]="msg.sender!" [receiver]="msg.receiver!"
+            [idOfMessage]="msg.id!" [content]="msg.content" [timestamp]="msg.timestamp "
+            [myMessage]="msg.sender?.id == user.id">
+          </app-message-card>
+
+        </div>
+
+      </div>
+
+      <div #bottom></div>
+    </div>
+
+    <!-- Messages -->
+
+    <!-- Message Input -->
+    <div class="message-input">
+      <button mat-icon-button>
+        <mat-icon>emoji_emotions</mat-icon>
+      </button>
+
+      <input class="text" [(ngModel)]="newMessage" (keydown.enter)="onSendMessage(newMessage)"
+        placeholder=" Type a message..." />
+      <input type="file" #fileInput hidden (change)="sendPhoto($event)" />
+
+      <button mat-icon-button (click)="fileInput.click()">
+        <mat-icon>attach_file</mat-icon>
+      </button>
+      <button mat-icon-button color="primary" (click)="onSendMessage(newMessage)">
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+
+<ng-template #basicMessage>
+  <mat-card class="chat-placeholder-card">
+    <mat-card-header>
+      <mat-card-title>No Conversation Selected</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Select a friend from the list to start chatting.</p>
+      <img [src]="'assets/images/chat-placeholder.svg'" alt="Chat Placeholder" class="placeholder-image" />
+    </mat-card-content>
+  </mat-card>
+</ng-template>

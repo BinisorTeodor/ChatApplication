@@ -1,0 +1,28 @@
+<div class="main-container">
+
+    <form [formGroup]="registerFrom" (ngSubmit)="onRegister()" class="form-container">
+        
+        
+        <mat-form-field appearance="fill">
+            <mat-label>Full Name</mat-label>
+            <input matInput formControlName="fullName" required>
+            <mat-icon matSuffix>person</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput type="text" formControlName="email">
+            <mat-icon matSuffix>email</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password">
+            <mat-icon matSuffix>lock</mat-icon>
+        </mat-form-field>
+
+        <mat-checkbox> I agree with the terms and conditions</mat-checkbox>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="registerFrom.invalid">Register now</button>
+    </form>
+</div>

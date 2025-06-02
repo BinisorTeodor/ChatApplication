@@ -1,0 +1,89 @@
+
+
+
+
+.dialog-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: center;
+  animation: fadeSlideIn 0.4s ease forwards;
+}
+
+
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-top: 1rem;
+  animation: fadeSlideIn 0.5s ease 100ms forwards;
+}
+
+
+.user-photo-section {
+  display: flex;
+  padding-top: 1rem;;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.user-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  animation: pulseAnim 3s infinite ease-in-out;
+}
+
+.upload-button {
+  background-color: #3f51b5;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.upload-button:hover {
+  background-color: #303f9f;
+}
+
+
+.full-width {
+  width: 100%;
+}
+
+mat-form-field {
+  transition: transform 0.2s ease;
+}
+
+mat-form-field:hover {
+  transform: scale(1.01);
+}
+
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseAnim {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.08);
+    }
+}

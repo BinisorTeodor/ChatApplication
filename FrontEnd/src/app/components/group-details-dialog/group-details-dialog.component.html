@@ -1,0 +1,74 @@
+<h2 mat-dialog-title class="dialog-title">Edit Group</h2>
+
+<h4 mat-dialog-title class="dialog-title" *ngIf="this.data.created_by == this.apiService.connectedUser.id"> ADMIN</h4>
+
+
+
+<mat-dialog-content [formGroup]="groupForm" class="dialog-content">
+
+  <div class="user-photo-section">
+    <img [src]="'http://localhost:8080' +(this.apiService.selectedGroup$ |async)?.avatar" (error)="this.apiService.onGroupImageFail($event)" alt="User Photo" class="user-photo" />
+    <label for="photoInput" class="upload-button">
+      Change Photo
+      <input id="photoInput" type="file" (change)="onFileSelected($event)" hidden />
+    </label>
+  </div>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Group Name</mat-label>
+    <input matInput formControlName="name">
+    <mat-icon matSuffix (click)="onSaveName(groupForm.value.name!)">edit</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Description</mat-label>
+    <mat-icon matSuffix (click)="onSaveDescription(groupForm.value.description!)">edit</mat-icon>
+    <textarea matInput formControlName="description"></textarea>
+  </mat-form-field>
+
+  <div class="members-section">
+    <h3>Members</h3>
+    <div class="member-list">
+      <div class="member-card" *ngFor="let member of this.apiService.groupMembers$ | async">
+        <img [src]="'http://localhost:8080' + member.avatar" (error)="this.apiService.onImageFail($event)"
+          alt="{{ member.fullName }}" class="member-photo" />
+        <div class="member-info">
+          <span class="member-name">{{ member.fullName }}</span>
+          <!-- Optionally more info -->
+        </div>
+        <button *ngIf="this.data.created_by == this.apiService.connectedUser.id" mat-icon-button color="warn" (click)="removeMember(member.id)" class="remove-btn" matTooltip="Remove">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="this.data.created_by == this.apiService.connectedUser.id">
+
+
+
+    <h3>Add friends <mat-divider inset></mat-divider> </h3>
+
+    <div class="member-list">
+      <div class="member-card" *ngFor="let member of this.filteredFriends$ | async">
+        <img [src]="'http://localhost:8080' + member.avatar" (error)="this.apiService.onImageFail($event)"
+          alt="{{ member.fullName }}" class="member-photo" />
+        <div class="member-info">
+          <span class="member-name">{{ member.fullName }}</span>
+        </div>
+        <button mat-icon-button color="warn" (click)="addMember(member.id)" class="remove-btn" matTooltip="Remove">
+          <mat-icon>person_add</mat-icon>
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Add Member</mat-label>
+    <input matInput (keyup.enter)="addMember()">
+  </mat-form-field>
+  <button mat-stroked-button color="primary" (click)="addMember()">Add</button> -->
+
+</mat-dialog-content>

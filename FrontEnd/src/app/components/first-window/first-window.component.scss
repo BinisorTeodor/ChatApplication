@@ -1,0 +1,89 @@
+
+
+.home-layout {
+  position: relative;
+  overflow: hidden;
+  height: 90.5dvh;
+  width: 100%;
+  background-image: url('./background.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.main-card {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.75);
+  width: 500px;
+  height: 300px;
+  z-index: 2;
+
+  animation: zoomFadeIn 0.6s ease-out forwards;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top :2rem;
+}
+
+.main-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 1);
+}
+
+.floating-card {
+  position: absolute;
+  width: 200px;
+  padding: 1rem;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.8s ease forwards, floatMove 5s ease-in-out infinite alternate;
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+
+.floating-card:hover {
+  transform: scale(1.05) rotate(1deg);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes zoomFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translate(-50%, -50%);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translate(-50%, -50%);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes floatMove {
+  0% {
+    transform: translateY(0px);
+  }
+
+  100% {
+    transform: translateY(-10px);
+  }
+}
+

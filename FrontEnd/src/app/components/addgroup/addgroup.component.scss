@@ -1,0 +1,60 @@
+
+.card-title {
+    padding: 1rem;
+}
+
+.friends-list-wrapper {
+  max-height: 400px; 
+  overflow-y: auto;
+  margin-top: 10px;
+  border: 1px solid #ccc; 
+  border-radius: 4px;
+}
+
+.friends-list-wrapper::-webkit-scrollbar {
+  width: 8px;
+}
+
+
+.friends-list-wrapper::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+  border-radius: 10px;
+}
+
+.friends-list-wrapper::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.friends-list-wrapper::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+.friend-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 1rem;
+  }
+
+.divider {
+transform: scaleY(0.4);
+transform-origin: center;
+background-color: rgba(0, 0, 0, 0.1);
+}
+
+.friend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

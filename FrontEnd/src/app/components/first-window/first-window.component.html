@@ -1,0 +1,30 @@
+<div class="home-layout">
+  <!-- Main Card -->
+  <mat-card class="main-card animate-fade-zoom">
+    <mat-card-header>
+      <div mat-card-avatar class="header-avatar"></div>
+      <mat-card-title>Welcome to My App!</mat-card-title>
+      <mat-card-subtitle>Your modern web experience starts here</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p>Discover powerful tools, clean design, and responsive layouts.</p>
+      <ul class="feature-list">
+        <li>🚀 Lightning-fast performance</li>
+        <li>🎨 Sleek, modern design</li>
+        <li>🔒 Secure & scalable architecture</li>
+      </ul>
+    </mat-card-content>
+
+    <mat-card-actions class="buttons">
+      <button mat-raised-button color="primary" (click)="onGetStarted()">Get Started</button>
+      <button mat-button color="accent">Learn More</button>
+    </mat-card-actions>
+  </mat-card>
+
+  <!-- Extra Random Cards -->
+  <mat-card class="floating-card animate-fade" *ngFor="let card of floatingCards" [ngStyle]="card.style">
+    <h3>{{ card.title }}</h3>
+    <p>{{ card.text }}</p>
+  </mat-card>
+</div>

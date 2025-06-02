@@ -1,0 +1,16 @@
+<mat-card class="dialog-card animated-dialog">
+  <button mat-icon-button class="close-btn" mat-dialog-close>
+    <mat-icon>close</mat-icon>
+  </button>
+
+  <div class="avatar-container">
+    <img [src]="'http://localhost:8080' + (this.apiService.selectedFriend$ | async)?.avatar"  (error)="this.apiService.onImageFail($event)" class="dialog-avatar pulse" alt="Friend photo" />
+  </div>
+
+  <h2 class="mat-headline-5">{{ (this.apiService.selectedFriend$ | async)?.fullName }}</h2>
+
+  <span class="status-badge" [ngClass]="{
+    'online': (this.apiService.selectedFriend$ | async)?.online,
+    'offline': !(this.apiService.selectedFriend$ | async)?.online
+  }">{{isOnline}}</span>
+</mat-card>
